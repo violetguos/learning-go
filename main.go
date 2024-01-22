@@ -17,7 +17,7 @@ var raw = ` <!DOCTYPE html> <html>
 </body> </html>`
 
 func helper(curr *html.Node, numWords int, numImg int) (int, int) {
-    
+    // my solution with return vals
     if curr.Type == html.ElementNode && curr.Data == "img" {
         for _, a := range curr.Attr {
             if a.Key == "src" {
@@ -38,12 +38,30 @@ func helper(curr *html.Node, numWords int, numImg int) (int, int) {
 
 }
 
+func visit(n *html.Node, words, pics *int) {
+    // official solution
+    if n.type == html.TextNode{
+        *words += len(strings.Fields(n.Data))
+    } else if n.Type == html.ElementNode && n.Data == "img" {
+        *pics++
+    }
+
+    for c := n.FirstChild; c !=nil; c = c.NextSibling {
+        visit(c, words, pics)
+    }
+
+
+}
+
 func countWordsAndImages(doc *html.Node) (int, int) {
 	
     // count all nodes in the current level
-    
-	
 	return helper(doc, 0, 0)
+
+    // using official solution
+    // var pics, words int
+    // visit(doc, &words, &pics)
+    // return words, pics
 }
 
 func main() {
