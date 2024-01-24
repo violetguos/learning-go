@@ -1,3 +1,6 @@
+# specific customizations
+*.py
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*
