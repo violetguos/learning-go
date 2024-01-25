@@ -77,3 +77,34 @@ func dailyTemperatures(temperatures []int) []int {
 }
 
 // END: https://leetcode.com/problems/daily-temperatures
+
+// BEGIN: https://leetcode.com/problems/max-area-of-island/description/
+func dfs(row, col, ROWS, COLS int, visited[][]bool, grid[][]int) int {
+    if row < 0  || row >= ROWS || col < 0 || col >= COLS || visited[row][col] || grid[row][col] == 0 {
+        return 0
+    }
+    visited[row][col] = true
+    return 1 + dfs(row+1, col, ROWS, COLS, visited, grid) + dfs(row-1, col, ROWS, COLS, visited, grid) + dfs(row, col+1, ROWS, COLS, visited, grid) + dfs(row, col-1, ROWS, COLS, visited, grid)
+
+}
+
+func maxAreaOfIsland(grid [][]int) int {
+    ROWS := len(grid)
+    COLS := len(grid[0])
+    visited := make([][]bool, ROWS)
+    for i := range visited {
+        visited[i] = make([]bool, COLS)
+    }
+    area := 0
+
+    for row := 0; row < ROWS; row++ {
+        for col := 0; col < COLS; col++ {
+            curr_area := dfs(row, col, ROWS, COLS, visited, grid)
+            if curr_area > area {
+                area = curr_area
+            }
+        }
+    }
+    return area
+} 
+// END: https://leetcode.com/problems/max-area-of-island/description/
